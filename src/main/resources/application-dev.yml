@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/zvuk_znanje?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimeZone=CET&AllowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/zvukiznanje?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimeZone=CET&AllowPublicKeyRetrieval=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
