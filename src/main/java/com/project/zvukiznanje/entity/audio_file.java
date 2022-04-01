@@ -3,7 +3,7 @@ package com.project.zvukiznanje.entity;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "audio_file")
 public class audio_file {
 
     @Id

@@ -7,18 +7,18 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table
+@Table(name = "users")
 public class users {
 
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @Column
     private String name;
 
-    @Column
+    @Column(name = "last_name")
     private String lastName;
 
     @Column
@@ -26,6 +26,9 @@ public class users {
 
     @Column(name = "date_of_creation")
     private Date dateOfCreation;
+
+    @Column
+    private String password;
 
     @JsonBackReference
     @OneToMany(mappedBy ="user")
@@ -39,12 +42,20 @@ public class users {
     )
     private Set<books> favourites = new HashSet<>();
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
