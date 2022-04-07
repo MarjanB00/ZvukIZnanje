@@ -21,7 +21,7 @@ public class users {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column
+    @Column(name = "email")
     private String email;
 
     @Column(name = "date_of_creation")
@@ -104,5 +104,19 @@ public class users {
 
     public void setFavourites(Set<books> favourites) {
         this.favourites = favourites;
+    }
+
+    @Override
+    public String toString() {
+        return "users{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfCreation=" + dateOfCreation +
+                ", password='" + password + '\'' +
+                ", UserRating=" + UserRating +
+                ", favourites=" + favourites +
+                '}';
     }
 }
