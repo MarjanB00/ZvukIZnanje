@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
-@SpringBootTest(classes = ZvukIZnanjeApplication.class)
+/* @SpringBootTest(classes = ZvukIZnanjeApplication.class)
 public class IntegrationTest {
 
     Logger logger = Logger.getLogger(String.valueOf(IntegrationTest.class));
@@ -25,3 +25,4 @@ public class IntegrationTest {
         //logger.info(String.valueOf(user));
     }
 }
+*/

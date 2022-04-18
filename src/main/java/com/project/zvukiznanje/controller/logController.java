@@ -14,15 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class logController {
 
-    /*
+
     @Autowired
     private UserService userService;
 
     @GetMapping(value = "/api/login/{email}/{password}")
     public ResponseEntity<UserDTO> login(@PathVariable(value = "email") String email,
                                          @PathVariable(value = "password") String password){
-        UserDTO user = userService.findLoginUser(email, password);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    } */
+      //  UserDTO user = userService.findLoginUser(email, password);
+        //return new ResponseEntity<>(user, HttpStatus.OK);
+        return null;
+    }
 
 }

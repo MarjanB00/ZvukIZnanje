@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService{
-/*
-    @Autowired
-    private userRepository UserRepository;
 
-    public UserDTO findLoginUser(String email, String password) {
-    return null;
-        //UserRepository.FindByEmailAndPassword(email, password);
-    }*/
+    @Autowired
+    private usersRepository UserRepository;
+
+    public users findLoginUser(String email, String password) {
+        users User = UserRepository.findByEmailAndPassword(email, password);
+        return null;
+    }
 }
