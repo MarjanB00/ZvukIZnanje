@@ -40,6 +40,7 @@ public class users {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
     )
+
     private Set<books> favourites = new HashSet<>();
 
     public String getPassword() {

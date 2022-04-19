@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface user_ratingRepository extends JpaRepository<user_rating, Integer>
 {
 
+
 }

@@ -1,6 +1,11 @@
 package com.project.zvukiznanje.dto;
 
+import com.project.zvukiznanje.entity.books;
+import com.project.zvukiznanje.entity.user_rating;
+
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 
 public class UserDTO {
 
@@ -10,6 +15,24 @@ public class UserDTO {
     private String email;
     private Date dateOfCreation;
     private String password;
+    private List<UserRatingDTO> UserRating;
+    private Set<BookDTO> favourites;
+
+    public Set<BookDTO> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(Set<BookDTO> favourites) {
+        this.favourites = favourites;
+    }
+
+    public List<UserRatingDTO> getUserRating() {
+        return UserRating;
+    }
+
+    public void setUserRating(List<UserRatingDTO> userRating) {
+        UserRating = userRating;
+    }
 
     public Integer getId() {
         return id;
@@ -54,6 +77,7 @@ public class UserDTO {
     public String getPassword() {
         return password;
     }
+
 
     public void setPassword(String password) {
         this.password = password;

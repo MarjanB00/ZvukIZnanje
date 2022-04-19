@@ -23,6 +23,7 @@ public class user_rating {
     @JoinColumn(name = "user_id")
     private users user;
 
+
     public Integer getId() {
         return Id;
     }

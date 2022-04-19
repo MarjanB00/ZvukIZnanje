@@ -1,14 +1,13 @@
 package com.project.zvukiznanje.controller;
 
 import com.project.zvukiznanje.dto.UserDTO;
+import com.project.zvukiznanje.mapper.UserMapper;
+import com.project.zvukiznanje.mapper.UserRatingMapper;
 import com.project.zvukiznanje.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -18,12 +17,22 @@ public class logController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapper UserMapper;
+
     @GetMapping(value = "/api/login/{email}/{password}")
     public ResponseEntity<UserDTO> login(@PathVariable(value = "email") String email,
                                          @PathVariable(value = "password") String password){
-      //  UserDTO user = userService.findLoginUser(email, password);
-        //return new ResponseEntity<>(user, HttpStatus.OK);
-        return null;
+       UserDTO user =UserMapper.convertToDTO(userService.findLoginUser(email, password));
+       if (user!=null){return new ResponseEntity<>(user, HttpStatus.OK);}
+       else {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
+    }
+
+    @PostMapping(value ="/api/register")
+    public ResponseEntity<Void> register(@RequestBody UserDTO UserDTO){
+        userService.save(UserDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
 }
