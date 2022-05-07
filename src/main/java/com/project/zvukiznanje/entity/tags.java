@@ -1,6 +1,8 @@
 package com.project.zvukiznanje.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -21,7 +23,7 @@ public class tags {
     @Column
     private String name;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToMany(mappedBy = "tags")
     private List<books> books = new ArrayList<>();
 

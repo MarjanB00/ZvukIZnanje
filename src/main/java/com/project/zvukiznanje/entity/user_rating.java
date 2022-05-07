@@ -18,12 +18,31 @@ public class user_rating {
     @Column
     private String rating;
 
-    @JsonManagedReference
+    /*
     @ManyToOne
     @JoinColumn(name = "user_id")
     private users user;
 
 
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private books book;
+
+    public books getBook() {
+        return book;
+    }
+
+    public void setBook(books book) {
+        this.book = book;
+    }
+    public users getUser() {
+        return user;
+    }
+
+    public void setUser(users user) {
+        this.user = user;
+    }
+*/
     public Integer getId() {
         return Id;
     }
@@ -40,11 +59,5 @@ public class user_rating {
         this.rating = rating;
     }
 
-    public users getUser() {
-        return user;
-    }
 
-    public void setUser(users user) {
-        this.user = user;
-    }
 }

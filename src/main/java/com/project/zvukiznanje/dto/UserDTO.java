@@ -15,7 +15,6 @@ public class UserDTO {
     private String email;
     private Date dateOfCreation;
     private String password;
-    private List<UserRatingDTO> UserRating;
     private Set<BookDTO> favourites;
 
     public Set<BookDTO> getFavourites() {
@@ -26,13 +25,6 @@ public class UserDTO {
         this.favourites = favourites;
     }
 
-    public List<UserRatingDTO> getUserRating() {
-        return UserRating;
-    }
-
-    public void setUserRating(List<UserRatingDTO> userRating) {
-        UserRating = userRating;
-    }
 
     public Integer getId() {
         return id;

@@ -1,8 +1,10 @@
 package com.project.zvukiznanje.controller;
 
 import com.project.zvukiznanje.dto.UserDTO;
+import com.project.zvukiznanje.entity.users;
 import com.project.zvukiznanje.mapper.UserMapper;
 import com.project.zvukiznanje.mapper.UserRatingMapper;
+import com.project.zvukiznanje.repository.usersRepository;
 import com.project.zvukiznanje.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class logController {
 
+    @Autowired
+    private usersRepository UserRepository;
 
     @Autowired
     private UserService userService;
@@ -30,7 +34,8 @@ public class logController {
 
     @PostMapping(value ="/api/register")
     public ResponseEntity<Void> register(@RequestBody UserDTO UserDTO){
-        userService.save(UserDTO);
+        users User = UserMapper.convertToEntity(UserDTO);
+        UserRepository.save(User);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }

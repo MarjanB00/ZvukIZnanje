@@ -1,6 +1,9 @@
 package com.project.zvukiznanje.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,11 +32,12 @@ public class books {
     @Column
     private String text_file;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToMany(mappedBy = "favourites")
     private Set<users> users = new HashSet<>();
 
-    @ManyToMany
+    @JsonManagedReference
+    @ManyToMany()
     @JoinTable(
             name = "book_tags",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
@@ -46,6 +50,18 @@ public class books {
     private audio_file audioFile;
 
 
+/*
+    @OneToMany(mappedBy = "book")
+    private List<user_rating> UserRatings = new ArrayList<>();
+
+    public List<user_rating> getUserRatings() {
+        return UserRatings;
+    }
+
+    public void setUserRatings(List<user_rating> userRatings) {
+        UserRatings = userRatings;
+    }
+*/
     public Integer getId() {
         return id;
     }

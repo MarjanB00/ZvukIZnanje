@@ -1,5 +1,9 @@
 package com.project.zvukiznanje.dto;
 
+import com.project.zvukiznanje.entity.books;
+
+import java.util.List;
+
 public class tagDTO {
     private Integer id;
     private String name;
