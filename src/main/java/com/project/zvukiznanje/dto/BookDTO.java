@@ -6,6 +6,7 @@ import com.project.zvukiznanje.entity.tags;
 import com.project.zvukiznanje.entity.user_rating;
 
 import javax.persistence.Column;
+import java.time.LocalDate;
 import java.util.List;
 
 public class BookDTO {
@@ -13,7 +14,7 @@ public class BookDTO {
     private Integer id;
     private String name;
     private String description;
-    private String date_of_creation;
+    private LocalDate date_of_creation;
     private String text_file;
     private List<tagDTO> tags;
 
@@ -50,11 +51,11 @@ public class BookDTO {
         this.description = description;
     }
 
-    public String getDate_of_creation() {
+    public LocalDate getDate_of_creation() {
         return date_of_creation;
     }
 
-    public void setDate_of_creation(String date_of_creation) {
+    public void setDate_of_creation(LocalDate date_of_creation) {
         this.date_of_creation = date_of_creation;
     }
 

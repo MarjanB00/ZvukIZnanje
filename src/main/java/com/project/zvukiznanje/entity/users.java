@@ -3,8 +3,11 @@ package com.project.zvukiznanje.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.*;
 
 @Entity
@@ -26,7 +29,7 @@ public class users {
     private String email;
 
     @Column(name = "date_of_creation")
-    private Date dateOfCreation;
+    private java.sql.Date dateOfCreation;
 
     @Column
     private String password;

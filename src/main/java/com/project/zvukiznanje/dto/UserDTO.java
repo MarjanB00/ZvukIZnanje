@@ -4,6 +4,7 @@ import com.project.zvukiznanje.entity.books;
 import com.project.zvukiznanje.entity.user_rating;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ public class UserDTO {
     private String name;
     private String lastName;
     private String email;
-    private Date dateOfCreation;
+    private LocalDate dateOfCreation;
     private String password;
     private Set<BookDTO> favourites;
 
@@ -58,11 +59,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public Date getDateOfCreation() {
+    public LocalDate getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(Date dateOfCreation) {
+    public void setDateOfCreation(LocalDate dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 

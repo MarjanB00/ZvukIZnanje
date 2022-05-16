@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,8 +29,8 @@ public class books {
     @Column
     private String description;
 
-    @Column
-    private String date_of_creation;
+    @Column(name = "date_of_creation")
+    private java.sql.Date date_of_creation;
 
     @Column
     private String text_file;
@@ -86,11 +89,11 @@ public class books {
         this.description = description;
     }
 
-    public String getDate_of_creation() {
+    public Date getDate_of_creation() {
         return date_of_creation;
     }
 
-    public void setDate_of_creation(String date_of_creation) {
+    public void setDate_of_creation(Date date_of_creation) {
         this.date_of_creation = date_of_creation;
     }
 

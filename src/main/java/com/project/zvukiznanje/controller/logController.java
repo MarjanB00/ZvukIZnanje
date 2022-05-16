@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 
 @RestController
 public class logController {
@@ -34,6 +37,7 @@ public class logController {
 
     @PostMapping(value ="/api/register")
     public ResponseEntity<Void> register(@RequestBody UserDTO UserDTO){
+        UserDTO.setDateOfCreation(LocalDate.now());
         users User = UserMapper.convertToEntity(UserDTO);
         UserRepository.save(User);
         return new ResponseEntity<>(HttpStatus.CREATED);
