@@ -18,6 +18,7 @@ public class UserDTO {
     private String password;
     private Set<BookDTO> favourites;
 
+
     public Set<BookDTO> getFavourites() {
         return favourites;
     }

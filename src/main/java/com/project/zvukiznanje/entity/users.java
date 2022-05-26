@@ -1,6 +1,7 @@
 package com.project.zvukiznanje.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,10 +35,7 @@ public class users {
     @Column
     private String password;
 
-    /*
-    @OneToMany(mappedBy ="user")
-    private List<user_rating> UserRating = new ArrayList<>();
-*/
+
     @JsonManagedReference
     @ManyToMany
     @JoinTable(
@@ -46,6 +44,7 @@ public class users {
             inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
     )
     private Set<books> favourites = new HashSet<>();
+
 
     public String getPassword() {
         return password;
@@ -95,17 +94,6 @@ public class users {
         this.dateOfCreation = dateOfCreation;
     }
 
-    /*
-    public List<user_rating> getUserRating() {
-        return UserRating;
-    }
-
-    public void setUserRating(List<user_rating> userRating) {
-        UserRating = userRating;
-    }
-    */
-
-
     public Set<books> getFavourites() {
         return favourites;
     }
@@ -123,7 +111,6 @@ public class users {
                 ", email='" + email + '\'' +
                 ", dateOfCreation=" + dateOfCreation +
                 ", password='" + password + '\'' +
-               // ", UserRating=" + UserRating +
                 ", favourites=" + favourites +
                 '}';
     }

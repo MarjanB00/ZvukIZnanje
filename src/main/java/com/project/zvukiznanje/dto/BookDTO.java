@@ -16,8 +16,18 @@ public class BookDTO {
     private String description;
     private LocalDate date_of_creation;
     private String text_file;
+    private Integer UserRating;
     private List<tagDTO> tags;
 
+
+
+    public Integer getUserRating() {
+        return UserRating;
+    }
+
+    public void setUserRating(Integer userRating) {
+        UserRating = userRating;
+    }
 
     public List<tagDTO> getTags() {
         return tags;

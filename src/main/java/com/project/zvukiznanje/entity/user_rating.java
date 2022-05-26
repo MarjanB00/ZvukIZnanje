@@ -1,5 +1,6 @@
 package com.project.zvukiznanje.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -13,51 +14,47 @@ public class user_rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer Id;
+    private Integer id;
+
+    @Column(name = "user_id")
+    private Integer UserID;
+
+    @Column(name = "book_id")
+    private Integer BookID;
 
     @Column
-    private String rating;
-
-    /*
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private users user;
+    private Integer rating;
 
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private books book;
-
-    public books getBook() {
-        return book;
+    public Integer getBookID() {
+        return BookID;
     }
 
-    public void setBook(books book) {
-        this.book = book;
-    }
-    public users getUser() {
-        return user;
+    public void setBookID(Integer bookID) {
+        BookID = bookID;
     }
 
-    public void setUser(users user) {
-        this.user = user;
+    public Integer getUserID() {
+        return UserID;
     }
-*/
+
+    public void setUserID(Integer userID) {
+        UserID = userID;
+    }
+
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
-    public String getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
-
-
 }

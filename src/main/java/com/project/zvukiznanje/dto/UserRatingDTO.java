@@ -1,33 +1,12 @@
 package com.project.zvukiznanje.dto;
 
-import com.project.zvukiznanje.entity.books;
-import com.project.zvukiznanje.entity.users;
-
-import javax.persistence.Column;
-import java.util.List;
-
 public class UserRatingDTO {
 
     private Integer Id;
-    private String rating;
-    private UserDTO user;
-    private BookDTO book;
+    private Integer UserID;
+    private Integer BookID;
+    private Integer rating;
 
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
-    public BookDTO getBook() {
-        return book;
-    }
-
-    public void setBook(BookDTO book) {
-        this.book = book;
-    }
 
     public Integer getId() {
         return Id;
@@ -37,11 +16,27 @@ public class UserRatingDTO {
         Id = id;
     }
 
-    public String getRating() {
+    public Integer getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(Integer userID) {
+        UserID = userID;
+    }
+
+    public Integer getBookID() {
+        return BookID;
+    }
+
+    public void setBookID(Integer bookID) {
+        BookID = bookID;
+    }
+
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 }

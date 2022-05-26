@@ -52,19 +52,6 @@ public class books {
     @PrimaryKeyJoinColumn
     private audio_file audioFile;
 
-
-/*
-    @OneToMany(mappedBy = "book")
-    private List<user_rating> UserRatings = new ArrayList<>();
-
-    public List<user_rating> getUserRatings() {
-        return UserRatings;
-    }
-
-    public void setUserRatings(List<user_rating> userRatings) {
-        UserRatings = userRatings;
-    }
-*/
     public Integer getId() {
         return id;
     }
