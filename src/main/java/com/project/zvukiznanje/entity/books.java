@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -39,8 +40,13 @@ public class books {
     @ManyToMany(mappedBy = "favourites")
     private Set<users> users = new HashSet<>();
 
-    @JsonManagedReference
-    @ManyToMany()
+
+
+    @ManyToMany(
+            cascade = {
+                    CascadeType.MERGE
+            }
+    )
     @JoinTable(
             name = "book_tags",
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),

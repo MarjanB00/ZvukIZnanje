@@ -2,7 +2,6 @@ package com.project.zvukiznanje.controller;
 
 import com.project.zvukiznanje.dto.BookDTO;
 import com.project.zvukiznanje.dto.UserDTO;
-import com.project.zvukiznanje.entity.books;
 import com.project.zvukiznanje.entity.users;
 import com.project.zvukiznanje.mapper.UserMapper;
 import com.project.zvukiznanje.repository.usersRepository;
@@ -10,10 +9,10 @@ import com.project.zvukiznanje.service.BookService;
 import com.project.zvukiznanje.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -43,6 +42,7 @@ public class logController {
        else {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
     }
 
+    @Transactional
     @PostMapping(value ="/api/register")
     public ResponseEntity<Void> register(@RequestBody UserDTO UserDTO){
         UserDTO.setDateOfCreation(LocalDate.now());
@@ -52,10 +52,11 @@ public class logController {
 
     }
 
-    @GetMapping(value = "/api/home")
-    public ResponseEntity<Page<books>>home(Pageable pageable){
-
-        Page<books> BookPage = bookService.getBooksByPage(pageable);
+   @GetMapping(value = "/api/home/")
+    public ResponseEntity<Page<BookDTO>>home(Pageable pageable,
+                                             @RequestHeader Integer id
+                                             ){
+        Page<BookDTO> BookPage = bookService.getBooksByPage(pageable, id);
         return new ResponseEntity<>(BookPage, HttpStatus.OK);
     }
 

@@ -23,7 +23,7 @@ public class tags {
     @Column
     private String name;
 
-    @JsonBackReference
+
     @ManyToMany(mappedBy = "tags")
     private List<books> books = new ArrayList<>();
 
