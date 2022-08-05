@@ -11,8 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashSet;
 
 @Repository
-public interface booksRepository extends JpaRepository<books, Integer>
-{
+public interface booksRepository extends JpaRepository<books, Integer> {
 
     @Query(value = "select * from books " +
             "where books.name LIKE %:keyWord% " +
@@ -20,7 +19,7 @@ public interface booksRepository extends JpaRepository<books, Integer>
     HashSet<books> searchByKeyWord(@Param("keyWord") String keyWord);
 
 
-    @Query(value="select Books from books Books")
+    @Query(value = "select Books from books Books")
     Page<books> getAllBooks(Pageable pageable);
 
     @Query(value = "select books.id as id, books.name as name, description, date_of_creation, text_file from books, book_tags, tags\n" +

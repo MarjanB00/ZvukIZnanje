@@ -1,11 +1,6 @@
 package com.project.zvukiznanje.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.zvukiznanje.entity.tags;
-import com.project.zvukiznanje.entity.user_rating;
-
-import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +13,6 @@ public class BookDTO {
     private String text_file;
     private Integer UserRating;
     private List<tagDTO> tags;
-
 
 
     public Integer getUserRating() {

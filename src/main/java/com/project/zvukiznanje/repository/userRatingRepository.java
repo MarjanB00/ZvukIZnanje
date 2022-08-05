@@ -11,12 +11,12 @@ import java.util.Set;
 @Repository
 public interface userRatingRepository extends JpaRepository<user_rating, Integer> {
 
-    @Query(value="select rating from user_rating " +
+    @Query(value = "select rating from user_rating " +
             "where user_rating.book_id like :BookID " +
             " and user_rating.user_id like :UserID", nativeQuery = true)
     Integer findRatingByBookIdAndUserID(@Param("BookID") Integer BookId, @Param("UserID") Integer UserID);
 
-    @Query(value="select * from user_rating " +
+    @Query(value = "select * from user_rating " +
             "where user_rating.user_id like :UserID", nativeQuery = true)
     Set<user_rating> findByUserID(@Param("UserID") Integer UserID);
 }

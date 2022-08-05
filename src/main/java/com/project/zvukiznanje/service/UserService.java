@@ -3,24 +3,20 @@ package com.project.zvukiznanje.service;
 import com.project.zvukiznanje.dto.BookDTO;
 import com.project.zvukiznanje.dto.UserDTO;
 import com.project.zvukiznanje.dto.UserRatingDTO;
-import com.project.zvukiznanje.entity.books;
-import com.project.zvukiznanje.entity.user_rating;
 import com.project.zvukiznanje.entity.users;
 import com.project.zvukiznanje.mapper.UserMapper;
 import com.project.zvukiznanje.mapper.UserRatingMapper;
 import com.project.zvukiznanje.repository.userRatingRepository;
 import com.project.zvukiznanje.repository.usersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserService{
+public class UserService {
+
+
 
     @Autowired
     private UserRatingMapper userRatingMapper;
@@ -40,10 +36,10 @@ public class UserService{
         Set<BookDTO> favorites = userDTO.getFavourites();
         Set<UserRatingDTO> AllRatingForUser = userRatingMapper.convertToDTO(UserRatingRepository.findByUserID(userDTO.getId()));
         favorites.forEach((bookDTO) -> AllRatingForUser.forEach(userRatingDTO -> {
-            if (userRatingDTO.getBookID().equals(bookDTO.getId())) {
-                bookDTO.setUserRating(userRatingDTO.getRating());
-            }
-        })
+                    if (userRatingDTO.getBookID().equals(bookDTO.getId())) {
+                        bookDTO.setUserRating(userRatingDTO.getRating());
+                    }
+                })
         );
         userDTO.setFavourites(favorites);
         return userDTO;
@@ -55,4 +51,8 @@ public class UserService{
 
     }
 
+   // public void addToFavourites(Integer bookId, Integer id) {
+     //  users user = UserRepository.getById(id);
+       //user.setFavourites(book);
+    //}
 }

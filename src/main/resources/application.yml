@@ -3,3 +3,7 @@ spring:
     name: Zvuk i Znanje
   profiles:
     active: dev
+
+  cache:
+    jcache:
+      config: classpath:ehcache.xml

@@ -35,16 +35,19 @@ public class logController {
 
     @GetMapping(value = "/api/login/{email}/{password}")
     public ResponseEntity<UserDTO> login(@PathVariable(value = "email") String email,
-                                         @PathVariable(value = "password") String password){
-       UserDTO user = userService.findLoginUser(email, password);
-       
-       if (user!=null){return new ResponseEntity<>(user, HttpStatus.OK);}
-       else {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
+                                         @PathVariable(value = "password") String password) {
+        UserDTO user = userService.findLoginUser(email, password);
+
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Transactional
-    @PostMapping(value ="/api/register")
-    public ResponseEntity<Void> register(@RequestBody UserDTO UserDTO){
+    @PostMapping(value = "/api/register")
+    public ResponseEntity<Void> register(@RequestBody UserDTO UserDTO) {
         UserDTO.setDateOfCreation(LocalDate.now());
         users User = UserMapper.convertToEntity(UserDTO);
         UserRepository.save(User);
@@ -52,10 +55,10 @@ public class logController {
 
     }
 
-   @GetMapping(value = "/api/home/")
-    public ResponseEntity<Page<BookDTO>>home(Pageable pageable,
-                                             @RequestHeader Integer id
-                                             ){
+    @GetMapping(value = "/api/home/")
+    public ResponseEntity<Page<BookDTO>> home(Pageable pageable,
+                                              @RequestHeader Integer id
+    ) {
         Page<BookDTO> BookPage = bookService.getBooksByPage(pageable, id);
         return new ResponseEntity<>(BookPage, HttpStatus.OK);
     }

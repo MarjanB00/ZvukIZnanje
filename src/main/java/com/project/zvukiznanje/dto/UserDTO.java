@@ -1,11 +1,6 @@
 package com.project.zvukiznanje.dto;
 
-import com.project.zvukiznanje.entity.books;
-import com.project.zvukiznanje.entity.user_rating;
-
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 public class UserDTO {

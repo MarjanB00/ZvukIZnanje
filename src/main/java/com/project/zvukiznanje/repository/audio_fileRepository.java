@@ -5,8 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface audio_fileRepository extends JpaRepository<audio_file, Integer>
-{
+public interface audio_fileRepository extends JpaRepository<audio_file, Integer> {
 
 
 }
