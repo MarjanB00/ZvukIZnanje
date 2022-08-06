@@ -6,5 +6,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
 server:
   port: 8080

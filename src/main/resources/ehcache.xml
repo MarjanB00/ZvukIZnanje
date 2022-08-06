@@ -5,7 +5,7 @@
             http://www.ehcache.org/v3
             http://www.ehcache.org/schame/ehcache-core-3.7.xsd">
 
-    <persistence directory="spring-boot-ehcache/cache"/>
+    <persistence directory="spring-boot-ehcache/cache" />
     <cache-template name="default">
         <expiry>
             <ttl unit="seconds">30</ttl>
@@ -23,7 +23,7 @@
         <resources>
             <heap>1000</heap>
             <offheap unit="MB" >10</offheap>
-            <disk pesistance="true" unit="MB">20</disk>
+            <disk persistent="true" unit="MB">20</disk>
         </resources>
     </cache-template>
 
