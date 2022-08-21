@@ -11,16 +11,16 @@ public class BookDTO {
     private String description;
     private LocalDate date_of_creation;
     private String text_file;
-    private Integer UserRating;
+    private Integer rating;
     private List<tagDTO> tags;
 
 
-    public Integer getUserRating() {
-        return UserRating;
+    public Integer getRating() {
+        return rating;
     }
 
-    public void setUserRating(Integer userRating) {
-        UserRating = userRating;
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
     public List<tagDTO> getTags() {

@@ -1,14 +1,20 @@
 package com.project.zvukiznanje.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tags")
-public class tags {
+public class Tags {
 
     @Id
     @Column
@@ -20,7 +26,7 @@ public class tags {
 
 
     @ManyToMany(mappedBy = "tags")
-    private List<books> books = new ArrayList<>();
+    private List<Books> books = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -39,11 +45,11 @@ public class tags {
         this.name = name;
     }
 
-    public List<com.project.zvukiznanje.entity.books> getBooks() {
+    public List<Books> getBooks() {
         return books;
     }
 
-    public void setBooks(List<com.project.zvukiznanje.entity.books> books) {
+    public void setBooks(List<Books> books) {
         this.books = books;
     }
 }

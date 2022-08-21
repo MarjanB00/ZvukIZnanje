@@ -5,9 +5,15 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql: true
+    show-sql: false
   cache:
     jcache:
       config: classpath:ehcache.xml
 server:
   port: 8080
+
+auth-key: YouShallNotPass
+
+jwt:
+  secret: b3ZvIGplIHRlc3QgbWFsbyBkdXplIHJpamVjaQ==
+  validityInMinutes: 20

@@ -2,7 +2,7 @@ package com.project.zvukiznanje.mapper;
 
 
 import com.project.zvukiznanje.dto.UserRatingDTO;
-import com.project.zvukiznanje.entity.user_rating;
+import com.project.zvukiznanje.entity.UserRatingEntity;
 import org.mapstruct.Mapper;
 
 import java.util.Set;
@@ -10,10 +10,11 @@ import java.util.Set;
 @Mapper(componentModel = "spring")
 public interface UserRatingMapper {
 
-    user_rating convertToEntity(UserRatingDTO UserRatingDTO);
+    UserRatingEntity convertToEntity(UserRatingDTO UserRatingDTO);
 
-    UserRatingDTO convertToDTO(user_rating user_rating);
+    UserRatingDTO convertToDTO(UserRatingEntity UserRatingEntity);
 
-    Set<UserRatingDTO> convertToDTO(Set<user_rating> UserRatingSet);
+    Set<UserRatingDTO> convertToDTO(Set<UserRatingEntity> userRatingEntitySet);
+
 
 }

@@ -1,63 +1,82 @@
 package com.project.zvukiznanje.service;
 
-import com.project.zvukiznanje.configuration.configClass;
 import com.project.zvukiznanje.dto.BookDTO;
-import com.project.zvukiznanje.entity.books;
-import com.project.zvukiznanje.mapper.BookMapper;
+import com.project.zvukiznanje.entity.BooksWithRating;
+import com.project.zvukiznanje.entity.Tags;
+import com.project.zvukiznanje.entity.Users;
+import com.project.zvukiznanje.mapper.BookWithRatingMapper;
 import com.project.zvukiznanje.mapper.TagMapper;
-import com.project.zvukiznanje.repository.booksRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.zvukiznanje.repository.BooksWithRatingRepository;
+import com.project.zvukiznanje.repository.TagsRepository;
+import com.project.zvukiznanje.repository.UsersRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
 
-    @Autowired
-    private TagMapper tagMapper;
+    private final UsersRepository usersRepository;
 
-    @Autowired
-    private configClass configClass;
+    private final TagsRepository tagsRepository;
 
-    @Autowired
-    private booksRepository BookRepository;
+    private final TagMapper tagMapper;
 
-    @Autowired
-    private BookMapper bookMapper;
+    private final BooksWithRatingRepository bookRepository;
+
+    private final BookWithRatingMapper bookWithRatingMapper;
 
 
-    public Page<BookDTO> getBooksByPage(Pageable pageable, Integer id) {
-        Page<books> page = BookRepository.getAllBooks(pageable);
-        return page.map(entity -> {
-            BookDTO dto = bookMapper.convertToDTO(entity);
-            dto.setUserRating(
-                    configClass.SortUserRating(entity.getId(), id)
-            );
-            return dto;
-        });
+    public Integer getAuthenticatedUserId()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Users user = usersRepository.findByUsername(authentication.getName());
+        return user.getId();
+
     }
 
-    public HashSet<BookDTO> getBooksWithKeyWord(String keyWord, Integer id) {
-        HashSet<BookDTO> Books = bookMapper.convertHashToDTO(BookRepository.searchByKeyWord(keyWord));
-        Books.forEach(book -> book.setUserRating(configClass.SortUserRating(book.getId(), id)));
-        return Books;
+
+
+    public Page<BookDTO> getBooksByPage(Pageable pageable) {
+        Integer id = getAuthenticatedUserId();
+        Page<BooksWithRating> page = bookRepository.getAllBooks(pageable , id);
+        return page.map(bookWithRatingMapper::convertToDTO);
     }
 
-    public HashSet<BookDTO> getBooksByTag(String tag, Integer id) {
-        HashSet<BookDTO> Books = bookMapper.convertHashToDTO(BookRepository.searchByTag(tag));
-        Books.forEach(book -> book.setUserRating(configClass.SortUserRating(book.getId(), id)));
+    public HashSet<BookDTO> getBooksWithKeyWord(String keyWord) {
+        Integer id = getAuthenticatedUserId();
+        return bookWithRatingMapper.convertHashToDTO(bookRepository.searchByKeyWord(keyWord, id));
+    }
+
+    public HashSet<BookDTO> getBooksByTag(String tag) {
+        Integer id = getAuthenticatedUserId();
+        Tags tagEntity = tagsRepository.findByName(tag);
+        HashSet<BookDTO> Books = bookWithRatingMapper.convertHashToDTO(bookRepository.searchByTag(tagEntity.getName(), id));
+
         return Books;
     }
 
     public void update(BookDTO bookDTO) {
-        books book = BookRepository.getById(bookDTO.getId());
+        BooksWithRating book = bookRepository.getById(bookDTO.getId());
         book.setName(bookDTO.getName());
         book.setDescription(bookDTO.getDescription());
         book.setTags(tagMapper.convertToEntityList(bookDTO.getTags()));
-        BookRepository.save(book);
+        bookRepository.save(book);
+    }
+
+
+    public void createNewBook(BookDTO bookDTO) {
+        bookDTO.setDate_of_creation(LocalDate.now());
+        bookDTO.setText_file("path/file" + bookDTO.getName() + ".pdf");
+        BooksWithRating book = bookWithRatingMapper.convertToEntity(bookDTO);
+        bookRepository.save(book);
     }
 }
 

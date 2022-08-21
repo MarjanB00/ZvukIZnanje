@@ -1,0 +1,4 @@
+#Key and value types
+#Tue Aug 09 21:10:11 CEST 2022
+valueType=com.project.zvukiznanje.entity.UserRatingEntity
+keyType=java.lang.Integer

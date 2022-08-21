@@ -1,20 +1,14 @@
 package com.project.zvukiznanje.mapper;
 
 import com.project.zvukiznanje.dto.BookDTO;
-import com.project.zvukiznanje.entity.books;
+import com.project.zvukiznanje.entity.Books;
+import com.project.zvukiznanje.entity.BooksWithRating;
 import org.mapstruct.Mapper;
-
-import java.util.HashSet;
 
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
+    Books convertToEntity(BookDTO bookDTO);
 
-    books convertToEntity(BookDTO BookDTO);
-
-    BookDTO convertToDTO(books books);
-
-    HashSet<BookDTO> convertHashToDTO(HashSet<books> books);
-
-
+    BookDTO convertToDTO(Books books);
 }

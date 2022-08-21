@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "audio_file")
-public class audio_file {
+public class AudioFile {
 
     @Id
     @Column
@@ -19,7 +19,7 @@ public class audio_file {
     @MapsId
     @OneToOne
     @JoinColumn(name = "id")
-    private books book;
+    private Books book;
 
     public Integer getId() {
         return id;
@@ -45,12 +45,12 @@ public class audio_file {
         Size = size;
     }
 
-    public books getBook() {
+    public Books getBook() {
         return book;
     }
 
 
-    public void setBook(books book) {
+    public void setBook(Books book) {
         this.book = book;
     }
 }

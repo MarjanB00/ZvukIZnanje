@@ -1,10 +1,16 @@
 package com.project.zvukiznanje.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_rating")
-public class user_rating {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserRatingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,19 +20,20 @@ public class user_rating {
     @Column(name = "user_id")
     private Integer UserID;
 
-    @Column(name = "book_id")
-    private Integer BookID;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Books book;
 
     @Column
     private Integer rating;
 
 
-    public Integer getBookID() {
-        return BookID;
+    public Books getBook() {
+        return book;
     }
 
-    public void setBookID(Integer bookID) {
-        BookID = bookID;
+    public void setBook(Books book) {
+        this.book = book;
     }
 
     public Integer getUserID() {

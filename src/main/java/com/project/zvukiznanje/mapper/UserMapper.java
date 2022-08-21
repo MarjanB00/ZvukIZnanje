@@ -2,7 +2,7 @@ package com.project.zvukiznanje.mapper;
 
 
 import com.project.zvukiznanje.dto.UserDTO;
-import com.project.zvukiznanje.entity.users;
+import com.project.zvukiznanje.entity.Users;
 import org.mapstruct.Mapper;
 
 
@@ -10,9 +10,9 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
 
 
-    users convertToEntity(UserDTO UserDTO);
+    Users convertToEntity(UserDTO UserDTO);
 
-    UserDTO convertToDTO(users user);
+    UserDTO convertToDTO(Users user);
 
 
 }

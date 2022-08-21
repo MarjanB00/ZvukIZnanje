@@ -27,9 +27,9 @@
         </resources>
     </cache-template>
 
-    <cache alias="userRating" uses-template="default">
+    <cache alias="userRatingEntity" uses-template="default">
         <key-type>java.lang.Integer</key-type>
-        <value-type>com.project.zvukiznanje.entity.user_rating</value-type>
+        <value-type>com.project.zvukiznanje.entity.UserRatingEntity</value-type>
     </cache>
 
 </config>

@@ -1,58 +1,85 @@
 package com.project.zvukiznanje.service;
 
-import com.project.zvukiznanje.dto.BookDTO;
 import com.project.zvukiznanje.dto.UserDTO;
-import com.project.zvukiznanje.dto.UserRatingDTO;
-import com.project.zvukiznanje.entity.users;
+import com.project.zvukiznanje.entity.Books;
+import com.project.zvukiznanje.entity.UserRatingEntity;
+import com.project.zvukiznanje.entity.Users;
 import com.project.zvukiznanje.mapper.UserMapper;
-import com.project.zvukiznanje.mapper.UserRatingMapper;
-import com.project.zvukiznanje.repository.userRatingRepository;
-import com.project.zvukiznanje.repository.usersRepository;
+import com.project.zvukiznanje.repository.BookRepository;
+import com.project.zvukiznanje.repository.BooksWithRatingRepository;
+import com.project.zvukiznanje.repository.UserRatingRepository;
+import com.project.zvukiznanje.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.Set;
+
 
 @Service
 public class UserService {
 
-
+    @Autowired
+    private BookRepository bookRepository;
 
     @Autowired
-    private UserRatingMapper userRatingMapper;
+    private BooksWithRatingRepository booksWithRatingRepository;
 
     @Autowired
-    private userRatingRepository UserRatingRepository;
+    private UserRatingRepository userRatingRepository;
 
     @Autowired
-    private usersRepository UserRepository;
+    private UsersRepository UserRepository;
 
     @Autowired
     private UserMapper userMapper;
 
-    public UserDTO findLoginUser(String email, String password) {
-        users user = UserRepository.findByEmailAndPassword(email, password);
-        UserDTO userDTO = userMapper.convertToDTO(user);
-        Set<BookDTO> favorites = userDTO.getFavourites();
-        Set<UserRatingDTO> AllRatingForUser = userRatingMapper.convertToDTO(UserRatingRepository.findByUserID(userDTO.getId()));
-        favorites.forEach((bookDTO) -> AllRatingForUser.forEach(userRatingDTO -> {
-                    if (userRatingDTO.getBookID().equals(bookDTO.getId())) {
-                        bookDTO.setUserRating(userRatingDTO.getRating());
-                    }
-                })
-        );
-        userDTO.setFavourites(favorites);
-        return userDTO;
+
+    public Integer getAuthenticatedUserId()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Users user = UserRepository.findByUsername(authentication.getName());
+        return user.getId();
+
     }
 
     public void save(UserDTO userDTO) {
-        users User = userMapper.convertToEntity(userDTO);
+        Users User = userMapper.convertToEntity(userDTO);
         UserRepository.save(User);
 
     }
 
-   // public void addToFavourites(Integer bookId, Integer id) {
-     //  users user = UserRepository.getById(id);
-       //user.setFavourites(book);
-    //}
+
+     public void addToFavourites(Integer bookId) {
+        //Get user id
+        Integer id = getAuthenticatedUserId();
+        //Get  user by id and book by bookId
+        Users user = UserRepository.findUserById(id);
+        Books book = bookRepository.findBookById(bookId);
+        //Add book to favourites
+         Set<Books> bookSet = user.getFavourites();
+
+
+         bookSet.add(book);
+        //Save new book to favourites
+         user.setFavourites(bookSet);
+         UserRepository.save(user);
+    }
+
+
+    public UserRatingEntity getRating(Integer id) {
+       return userRatingRepository.findByIdOne(id);
+    }
+
+
+    public void rate(Integer bookId, Integer rating) {
+        Integer id = getAuthenticatedUserId();
+
+        UserRatingEntity userRating = new UserRatingEntity();
+        userRating.setUserID(id);
+        userRating.setBook(bookRepository.getById(bookId));
+        userRating.setRating(rating);
+        userRatingRepository.save(userRating);
+
+    }
 }
