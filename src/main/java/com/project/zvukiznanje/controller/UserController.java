@@ -25,7 +25,7 @@ public class UserController {
 
    }
 
-    @PutMapping(value = "/api/user/Rate")
+    @PutMapping(value = "/api/user/rate")
     public ResponseEntity<Void> addBookRating(@RequestParam("BookId") Integer BookId,
                                               @RequestParam("Rating") Integer Rating){
         userService.rate(BookId, Rating);

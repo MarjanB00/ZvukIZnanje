@@ -2,6 +2,7 @@ package com.project.zvukiznanje.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Immutable
 @Entity
 @Getter
 @Setter

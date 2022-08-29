@@ -2,6 +2,7 @@ package com.project.zvukiznanje.dto;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class UserDTO {
     private String username;
     private String email;
     private LocalDate dateOfCreation;
+    @JsonIgnore
     private String password;
     private Set<BookDTO> favourites;
 

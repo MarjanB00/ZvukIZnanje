@@ -6,13 +6,15 @@ import com.project.zvukiznanje.entity.UserRatingEntity;
 import com.project.zvukiznanje.entity.Users;
 import com.project.zvukiznanje.mapper.UserMapper;
 import com.project.zvukiznanje.repository.BookRepository;
-import com.project.zvukiznanje.repository.BooksWithRatingRepository;
 import com.project.zvukiznanje.repository.UserRatingRepository;
 import com.project.zvukiznanje.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.Set;
 
 
@@ -23,7 +25,7 @@ public class UserService {
     private BookRepository bookRepository;
 
     @Autowired
-    private BooksWithRatingRepository booksWithRatingRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRatingRepository userRatingRepository;
@@ -80,6 +82,20 @@ public class UserService {
         userRating.setBook(bookRepository.getById(bookId));
         userRating.setRating(rating);
         userRatingRepository.save(userRating);
+
+    }
+
+    public void register(UserDTO userDTO) {
+
+            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+
+            userDTO.setDateOfCreation(LocalDate.now());
+
+            Users user = userMapper.convertToEntity(userDTO);
+            user.setPassword(encodedPassword);
+
+
+            UserRepository.save(user);
 
     }
 }

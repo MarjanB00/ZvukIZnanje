@@ -1,7 +1,9 @@
-package com.project.zvukiznanje.security;
+package com.project.zvukiznanje.security.configuration;
 
+import com.project.zvukiznanje.security.UserDetailsServiceImpl;
 import com.project.zvukiznanje.security.exception.HttpUnauthorizedEntryPoint;
 import com.project.zvukiznanje.security.jwt.JwtFilter;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,11 +20,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
 
     @Autowired
     private JwtFilter jwtFilter;
@@ -37,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.OPTIONS);
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,6 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Bean
