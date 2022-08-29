@@ -28,8 +28,7 @@ public class BookController {
     }
     @Transactional
     @PutMapping(value = "/api/book/update")
-    public  ResponseEntity<Void> updateBook(@RequestBody BookDTO bookDTO,
-                                            @RequestHeader Integer id){
+    public  ResponseEntity<Void> updateBook(@RequestBody BookDTO bookDTO){
         bookService.update(bookDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }

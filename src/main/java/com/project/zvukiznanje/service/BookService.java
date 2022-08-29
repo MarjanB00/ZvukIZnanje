@@ -1,11 +1,14 @@
 package com.project.zvukiznanje.service;
 
 import com.project.zvukiznanje.dto.BookDTO;
+import com.project.zvukiznanje.entity.Books;
 import com.project.zvukiznanje.entity.BooksWithRating;
 import com.project.zvukiznanje.entity.Tags;
 import com.project.zvukiznanje.entity.Users;
+import com.project.zvukiznanje.mapper.BookMapper;
 import com.project.zvukiznanje.mapper.BookWithRatingMapper;
 import com.project.zvukiznanje.mapper.TagMapper;
+import com.project.zvukiznanje.repository.BookRepository;
 import com.project.zvukiznanje.repository.BooksWithRatingRepository;
 import com.project.zvukiznanje.repository.TagsRepository;
 import com.project.zvukiznanje.repository.UsersRepository;
@@ -23,16 +26,13 @@ import java.util.HashSet;
 @RequiredArgsConstructor
 public class BookService {
 
-    private final UsersRepository usersRepository;
-
-    private final TagsRepository tagsRepository;
-
+    private final BookMapper bookMapper;
     private final TagMapper tagMapper;
-
-    private final BooksWithRatingRepository bookRepository;
-
+    private final BookRepository bookRepository;
+    private final TagsRepository tagsRepository;
+    private final UsersRepository usersRepository;
     private final BookWithRatingMapper bookWithRatingMapper;
-
+    private final BooksWithRatingRepository booksWithRatingRepository;
 
     public Integer getAuthenticatedUserId()
     {
@@ -46,25 +46,25 @@ public class BookService {
 
     public Page<BookDTO> getBooksByPage(Pageable pageable) {
         Integer id = getAuthenticatedUserId();
-        Page<BooksWithRating> page = bookRepository.getAllBooks(pageable , id);
+        Page<BooksWithRating> page = booksWithRatingRepository.getAllBooks(pageable , id);
         return page.map(bookWithRatingMapper::convertToDTO);
     }
 
     public HashSet<BookDTO> getBooksWithKeyWord(String keyWord) {
         Integer id = getAuthenticatedUserId();
-        return bookWithRatingMapper.convertHashToDTO(bookRepository.searchByKeyWord(keyWord, id));
+        return bookWithRatingMapper.convertHashToDTO(booksWithRatingRepository.searchByKeyWord(keyWord, id));
     }
 
     public HashSet<BookDTO> getBooksByTag(String tag) {
         Integer id = getAuthenticatedUserId();
         Tags tagEntity = tagsRepository.findByName(tag);
-        HashSet<BookDTO> Books = bookWithRatingMapper.convertHashToDTO(bookRepository.searchByTag(tagEntity.getName(), id));
+        HashSet<BookDTO> Books = bookWithRatingMapper.convertHashToDTO(booksWithRatingRepository.searchByTag(tagEntity.getName(), id));
 
         return Books;
     }
 
     public void update(BookDTO bookDTO) {
-        BooksWithRating book = bookRepository.getById(bookDTO.getId());
+        Books book = bookRepository.getById(bookDTO.getId());
         book.setName(bookDTO.getName());
         book.setDescription(bookDTO.getDescription());
         book.setTags(tagMapper.convertToEntityList(bookDTO.getTags()));
@@ -75,7 +75,7 @@ public class BookService {
     public void createNewBook(BookDTO bookDTO) {
         bookDTO.setDate_of_creation(LocalDate.now());
         bookDTO.setText_file("path/file" + bookDTO.getName() + ".pdf");
-        BooksWithRating book = bookWithRatingMapper.convertToEntity(bookDTO);
+        Books book = bookMapper.convertToEntity(bookDTO);
         bookRepository.save(book);
     }
 }
