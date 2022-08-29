@@ -29,10 +29,13 @@ public interface BooksWithRatingRepository extends JpaRepository<BooksWithRating
    HashSet<BooksWithRating> searchByKeyWord(@Param("keyWord") String keyWord, @Param("id") Integer id);
 
 
-    @Query(value = "select b.id, b.name, b.description, b.date_of_creation, b.text_file, ur.rating " +
-            "from books b " +
-            "left  join (SELECT rating,  book_id from user_rating as ur where ur.user_id like :id) as ur " +
-            "on ur.book_id=b.id ", nativeQuery = true)
+    @Query(value = "select books.id, name, description, date_of_creation, text_file, ur.rating " +
+            "from books " +
+            "left join user_rating as ur on ur.book_id=books.id and ur.user_id like :id ",
+            countQuery = "SELECT count(*) FROM books  " +
+                    "left join user_rating as ur on ur.book_id=books.id " +
+                    "and ur.user_id like :id ",
+            nativeQuery = true)
     Page<BooksWithRating> getAllBooks(Pageable pageable, @Param("id") Integer id);
 
 
