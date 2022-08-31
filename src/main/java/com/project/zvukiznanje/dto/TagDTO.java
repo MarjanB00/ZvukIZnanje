@@ -1,6 +1,6 @@
 package com.project.zvukiznanje.dto;
 
-public class tagDTO {
+public class TagDTO {
     private Integer id;
     private String name;
 

@@ -38,6 +38,9 @@ public class BookService {
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Users user = usersRepository.findByUsername(authentication.getName());
+        if (user==null){
+            return null;
+        }
         return user.getId();
 
     }

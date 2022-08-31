@@ -12,7 +12,7 @@ public class BookDTO {
     private LocalDate date_of_creation;
     private String text_file;
     private Integer rating;
-    private List<tagDTO> tags;
+    private List<TagDTO> tags;
 
 
     public Integer getRating() {
@@ -23,11 +23,11 @@ public class BookDTO {
         this.rating = rating;
     }
 
-    public List<tagDTO> getTags() {
+    public List<TagDTO> getTags() {
         return tags;
     }
 
-    public void setTags(List<tagDTO> tags) {
+    public void setTags(List<TagDTO> tags) {
         this.tags = tags;
     }
 
