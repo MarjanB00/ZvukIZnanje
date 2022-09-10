@@ -8,17 +8,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Integer> {
 
-    Users findByEmailAndPassword(String email, String Password);
-
-
-    Users findByName(String username);
-
-    @Query(value="select user from Users user " +
-            "where user.username like :username")
-    Users findByUsername(String username);
-
 
     @Query(value="select user from Users user " +
             "where user.id = :id")
     Users findUserById(Integer id);
+
+
+
+    @Query(value="select user from Users user " +
+            "where user.email= :username")
+    Users findByEmail(String username);
+
+
+
+
 }

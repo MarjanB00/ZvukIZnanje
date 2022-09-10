@@ -8,6 +8,7 @@ import com.project.zvukiznanje.mapper.UserMapper;
 import com.project.zvukiznanje.repository.BookRepository;
 import com.project.zvukiznanje.repository.UserRatingRepository;
 import com.project.zvukiznanje.repository.UsersRepository;
+import com.project.zvukiznanje.security.dto.UserRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +41,7 @@ public class UserService {
     public Integer getAuthenticatedUserId()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users user = UserRepository.findByUsername(authentication.getName());
+        Users user = UserRepository.findByEmail(authentication.getName());
         return user.getId();
 
     }
@@ -85,17 +86,33 @@ public class UserService {
 
     }
 
-    public void register(UserDTO userDTO) {
+    public void register(UserRegister userRegister) {
 
-            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+            String encodedPassword = passwordEncoder.encode(userRegister.getPassword());
 
-            userDTO.setDateOfCreation(LocalDate.now());
+            userRegister.setDateOfCreation(LocalDate.now());
 
-            Users user = userMapper.convertToEntity(userDTO);
+            Users user = userMapper.convertToEntityReg(userRegister);
             user.setPassword(encodedPassword);
 
 
             UserRepository.save(user);
 
+    }
+
+    public void removeFromFavourites(Integer bookId) {
+
+        Integer id = getAuthenticatedUserId();
+        //Get  user by id and book by bookId
+        Users user = UserRepository.findUserById(id);
+        Books book = bookRepository.findBookById(bookId);
+        //Add book to favourites
+        Set<Books> bookSet = user.getFavourites();
+
+
+        bookSet.remove(book);
+        //Save new book to favourites
+        user.setFavourites(bookSet);
+        UserRepository.save(user);
     }
 }

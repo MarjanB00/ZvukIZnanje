@@ -25,6 +25,13 @@ public class UserController {
 
    }
 
+    @PutMapping(value = "/api/user/removeFromFavourites/{BookId}")
+    public ResponseEntity<Void> removeBookFromFavourites(@PathVariable Integer BookId) {
+        userService.removeFromFavourites(BookId);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
     @PutMapping(value = "/api/user/rate")
     public ResponseEntity<Void> addBookRating(@RequestParam("BookId") Integer BookId,
                                               @RequestParam("Rating") Integer Rating){

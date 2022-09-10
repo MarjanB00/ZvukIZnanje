@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static javax.persistence.DiscriminatorType.STRING;
 
 @Getter
 @Setter
@@ -39,6 +38,15 @@ public class Books {
     @Column
     private String text_file;
 
+    @Column
+    private String image;
+
+    @Column
+    private String audio_file;
+
+    @Column
+    private String author;
+
     @JsonBackReference
     @ManyToMany(mappedBy = "favourites")
     private Set<Users> users = new HashSet<>();
@@ -52,8 +60,5 @@ public class Books {
     private List<Tags> tags = new ArrayList<>();
 
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private AudioFile audioFile;
 
 }

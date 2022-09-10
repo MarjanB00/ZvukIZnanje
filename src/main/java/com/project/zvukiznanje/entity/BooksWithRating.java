@@ -38,6 +38,18 @@ public class BooksWithRating{
     @Column
     private String text_file;
 
+    @Column
+    private String image;
+
+    @Column
+    private String audio_file;
+
+    @Column
+    private String author;
+
+    @JsonBackReference
+    @ManyToMany(mappedBy = "favourites")
+    private Set<Users> users = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -47,10 +59,6 @@ public class BooksWithRating{
     )
     private List<Tags> tags = new ArrayList<>();
 
-
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private AudioFile audioFile;
 
 
 

@@ -1,6 +1,7 @@
 package com.project.zvukiznanje.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Roles {
     @Column
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private List<Users> users;
 

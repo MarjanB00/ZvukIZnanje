@@ -20,7 +20,7 @@ public interface BooksWithRatingRepository extends JpaRepository<BooksWithRating
    /* @Query(value = "select * from books " +
             "where books.name LIKE %:keyWord% " +
             "or books.description LIKE %:keyWord%", nativeQuery = true)*/
-   @Query(value = "select b.id, b.name, b.description, b.date_of_creation, b.text_file, ur.rating " +
+   @Query(value = "select b.id, b.name, b.description, b.date_of_creation, b.text_file, b.image, b.audio_file, b.author, ur.rating " +
            "from books b " +
            "left  join (SELECT rating,  book_id from user_rating as ur where ur.user_id like :id) as ur " +
            "on ur.book_id=b.id " +
@@ -29,9 +29,9 @@ public interface BooksWithRatingRepository extends JpaRepository<BooksWithRating
    HashSet<BooksWithRating> searchByKeyWord(@Param("keyWord") String keyWord, @Param("id") Integer id);
 
 
-    @Query(value = "select books.id, name, description, date_of_creation, text_file, ur.rating " +
+    @Query(value = "select books.id, name, description, date_of_creation, text_file, image, audio_file, author, ur.rating " +
             "from books " +
-            "left join user_rating as ur on ur.book_id=books.id and ur.user_id like :id ",
+            " left join user_rating as ur on ur.book_id=books.id and ur.user_id like :id ",
             countQuery = "SELECT count(*) FROM books  " +
                     "left join user_rating as ur on ur.book_id=books.id " +
                     "and ur.user_id like :id ",
@@ -41,7 +41,7 @@ public interface BooksWithRatingRepository extends JpaRepository<BooksWithRating
 
 
     @Query(value = "select * from " +
-            "(select id, b.name, b.description, b.date_of_creation, b.text_file, ur.rating " +
+            "(select id, b.name, b.description, b.date_of_creation, b.text_file, b.image, b.audio_file, b.author, ur.rating " +
             "from books b " +
             "left  join (SELECT rating,  book_id from user_rating where user_id= :id) as ur " +
             "on ur.book_id=b.id) book_table, tags t, book_tags bt " +

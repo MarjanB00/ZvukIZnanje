@@ -1,7 +1,9 @@
 package com.project.zvukiznanje.controller;
 
+import com.project.zvukiznanje.dto.BookCreateDTO;
 import com.project.zvukiznanje.dto.BookDTO;
 import com.project.zvukiznanje.service.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
-
+@Slf4j
 @RestController
 public class BookController {
 
@@ -22,14 +24,16 @@ public class BookController {
 
     @Transactional
     @PostMapping(value = "/api/book/create")
-    public ResponseEntity<Void> createNewBook(@RequestBody BookDTO bookDTO) {
-        bookService.createNewBook(bookDTO);
+    public ResponseEntity<Void> createNewBook(@RequestBody BookCreateDTO bookCreateDTO) {
+        log.info(bookCreateDTO.toString());
+        bookService.createNewBook(bookCreateDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @Transactional
     @PutMapping(value = "/api/book/update")
-    public  ResponseEntity<Void> updateBook(@RequestBody BookDTO bookDTO){
-        bookService.update(bookDTO);
+    public  ResponseEntity<Void> updateBook(@RequestBody BookCreateDTO bookDTO,
+                                            @RequestParam Integer bookId){
+        bookService.update(bookDTO, bookId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -5,6 +5,7 @@ import com.project.zvukiznanje.dto.UserDTO;
 import com.project.zvukiznanje.mapper.UserMapper;
 import com.project.zvukiznanje.repository.UsersRepository;
 import com.project.zvukiznanje.security.dto.UserLoginDTO;
+import com.project.zvukiznanje.security.dto.UserRegister;
 import com.project.zvukiznanje.security.dto.UserWithTokenDTO;
 import com.project.zvukiznanje.security.jwt.JwtTokenProvider;
 import com.project.zvukiznanje.service.UserService;
@@ -44,7 +45,7 @@ public class AuthController {
     ResponseEntity<UserWithTokenDTO>login(@RequestBody UserLoginDTO userLoginDTO){
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                userLoginDTO.getUsername(), userLoginDTO.getPassword()
+                userLoginDTO.getEmail(), userLoginDTO.getPassword()
         );
 
         try {
@@ -53,7 +54,7 @@ public class AuthController {
 
             String token = jwtTokenProvider.createToken(authentication);
 
-            UserDTO user = userMapper.convertToDTO(usersRepository.findByUsername(authentication.getName()));
+            UserDTO user = userMapper.convertToDTO(usersRepository.findByEmail(authentication.getName()));
 
             UserWithTokenDTO userWithToken = new UserWithTokenDTO(token, user);
 
@@ -65,11 +66,11 @@ public class AuthController {
     }
 
     @PostMapping(value = "register")
-    public ResponseEntity<Void> register(@RequestBody UserDTO userDTO) throws ValidationException
+    public ResponseEntity<Void> register(@RequestBody UserRegister userRegister) throws ValidationException
     {
 
 
-        userService.register(userDTO);
+        userService.register(userRegister);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

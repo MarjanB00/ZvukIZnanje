@@ -9,6 +9,10 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 10240MB
 server:
   port: 8080
 
@@ -17,3 +21,6 @@ auth-key: YouShallNotPass
 jwt:
   secret: b3ZvIGplIHRlc3QgbWFsbyBkdXplIHJpamVjaQ==
   validityInMinutes: 20
+
+fs:
+  base-url: \Users\PC\Desktop\ZvukIznanjeFiles\

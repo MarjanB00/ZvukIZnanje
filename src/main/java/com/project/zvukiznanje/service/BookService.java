@@ -1,6 +1,8 @@
 package com.project.zvukiznanje.service;
 
+import com.project.zvukiznanje.dto.BookCreateDTO;
 import com.project.zvukiznanje.dto.BookDTO;
+import com.project.zvukiznanje.dto.TagDTO;
 import com.project.zvukiznanje.entity.Books;
 import com.project.zvukiznanje.entity.BooksWithRating;
 import com.project.zvukiznanje.entity.Tags;
@@ -19,8 +21,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +42,7 @@ public class BookService {
     public Integer getAuthenticatedUserId()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users user = usersRepository.findByUsername(authentication.getName());
+        Users user = usersRepository.findByEmail(authentication.getName());
         if (user==null){
             return null;
         }
@@ -66,19 +71,38 @@ public class BookService {
         return Books;
     }
 
-    public void update(BookDTO bookDTO) {
-        Books book = bookRepository.getById(bookDTO.getId());
-        book.setName(bookDTO.getName());
-        book.setDescription(bookDTO.getDescription());
-        book.setTags(tagMapper.convertToEntityList(bookDTO.getTags()));
+    public void update(BookCreateDTO bookCreateDTO, Integer bookId) {
+        Books book = bookRepository.findBookById(bookId);
+
+        book.setName(bookCreateDTO.getName());
+        book.setDescription(bookCreateDTO.getDescription());
+        book.setAuthor(bookCreateDTO.getAuthor());
+        book.setImage(bookCreateDTO.getImage());
+
+        List<Tags> listOfTags = new ArrayList<>();
+        for (Integer id : bookCreateDTO.getTagIds()) {
+            listOfTags.add (tagsRepository.findTagsById(id));
+        }
+        book.setTags(listOfTags);
         bookRepository.save(book);
     }
 
 
-    public void createNewBook(BookDTO bookDTO) {
+    public void createNewBook(BookCreateDTO bookCreateDTO) {
+        BookDTO bookDTO = new BookDTO();
+
+        bookDTO.setName(bookCreateDTO.getName());
+        bookDTO.setDescription(bookCreateDTO.getDescription());
+        bookDTO.setAuthor(bookCreateDTO.getAuthor());
         bookDTO.setDate_of_creation(LocalDate.now());
-        bookDTO.setText_file("path/file" + bookDTO.getName() + ".pdf");
+        bookDTO.setImage(bookCreateDTO.getImage());
+
         Books book = bookMapper.convertToEntity(bookDTO);
+        List<Tags> listOfTags = new ArrayList<>();
+        for (Integer id : bookCreateDTO.getTagIds()) {
+          listOfTags.add (tagsRepository.findTagsById(id));
+        }
+        book.setTags(listOfTags);
         bookRepository.save(book);
     }
 }
